@@ -83,3 +83,12 @@ When knowledge is superseded by a newer source:
 - **Workspace Confinement:** All operations must stay strictly within `/mnt/d/Users/aria/workspaces/personal/knowledge-index`.
 - **Read Before Write:** Always view or read an existing note before editing or linking to verify existing headings and aliases.
 - **Preservation First:** Never delete compiled notes permanently; move superseded or historical snapshots to an `archive/` folder.
+
+# Project Memory
+- **Compulsory Knowledge & Change Logging:** On every operation that adds, modifies, updates, archives, or refactors knowledge notes, you MUST append a descriptive entry to `wiki/log.md` recording:
+  1. The action type (`ingest`, `update`, `refactor`, `archive`, `lint`).
+  2. Exactly what knowledge was added, modified, or superseded.
+  3. The specific affected files (`wiki/...` and `raw/...`).
+  - Format: `## [YYYY-MM-DD] <action> | <Summary of knowledge added or changes made> (notes: [[note-slug]])`
+  - Atomic Rule: Never complete a knowledge operation without updating `wiki/log.md` in the same turn.
+
