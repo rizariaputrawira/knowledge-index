@@ -26,3 +26,9 @@ venv/
 
 # Hyper-Execution Volatile Evidence
 .ar-wf/hyper-execution/evidence/
+
+# Python cache
+scripts/__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
