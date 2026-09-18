@@ -73,7 +73,7 @@
       "ended_at": "2026-09-18T15:50:40+07:00",
       "elapsed_ms": 60000,
       "evidence_path": ".ar-wf/hyper-execution/evidence/01-20260918-clean-karpathy-wiki-bootstrap/task-7/report.txt",
-      "commit": null
+      "commit": "e105c5277e521666dc204ccc9e3a66e09a72e408"
     }
   }
 }
