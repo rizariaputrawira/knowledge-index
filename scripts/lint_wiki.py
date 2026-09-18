@@ -30,12 +30,7 @@ from pathlib import Path
 
 WIKILINK_RE = re.compile(r"\[\[([^\]|#]+?)(?:[|#][^\]]*)?\]\]")
 SKIP_ORPHAN_STEMS = {"index", "log", "admin-index"}
-SKIP_ADMIN = {"admin/", "/admin/"}
-
-
-def stem(path: Path, wiki_dir: Path) -> str:
-    """Return the canonical slug (filename without .md) for a wiki file."""
-    return path.stem
+SKIP_ADMIN = {"admin/"}
 
 
 def iter_wiki_notes(wiki_dir: Path):
@@ -54,20 +49,10 @@ def parse_wikilinks(text: str) -> list[str]:
     return [m.group(1).strip() for m in WIKILINK_RE.finditer(text)]
 
 
-def resolve_slug(slug: str, wiki_dir: Path) -> Path | None:
+def resolve_slug(slug: str, all_notes: dict[str, Path]) -> Path | None:
     """Return the .md path for a slug if it exists, else None."""
-    # Try direct match (slug = filename stem)
-    direct = wiki_dir / f"{slug}.md"
-    if direct.is_file():
-        return direct
-    # Try case-insensitive rglob
-    for path in wiki_dir.rglob(f"{slug}.md"):
-        return path
-    # Try with kebab normalization
-    normalized = re.sub(r"\s+", "-", slug.lower())
-    for path in wiki_dir.rglob(f"{normalized}.md"):
-        return path
-    return None
+    name = Path(slug).stem
+    return all_notes.get(slug) or all_notes.get(name) or all_notes.get(re.sub(r"\s+", "-", name.lower()))
 
 
 def main(argv: list[str]) -> int:
@@ -108,7 +93,7 @@ def main(argv: list[str]) -> int:
     for note in sorted(iter_wiki_notes(wiki_dir)):
         broken = []
         for slug in outbound.get(note, []):
-            target = resolve_slug(slug, wiki_dir)
+            target = resolve_slug(slug, all_notes)
             if target is None:
                 broken.append(slug)
                 broken_count += 1
@@ -142,7 +127,7 @@ def main(argv: list[str]) -> int:
     for slug, count in sorted(mention_count.items(), key=lambda x: -x[1]):
         if count < 2:
             continue
-        target = resolve_slug(slug, wiki_dir)
+        target = resolve_slug(slug, all_notes)
         if target is None:
             print(f"  - [[{slug}]] — mentioned {count}× but no page exists")
             red_count += 1
