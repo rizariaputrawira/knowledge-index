@@ -23,15 +23,32 @@ Whenever processing new source materials (papers, articles, transcripts, books, 
    > Source: {URL or origin description}
    > Collected: {YYYY-MM-DD}
    > Published: {YYYY-MM-DD or Unknown}
+   > Version: {version string — verify in source or ask user}
    ```
 2. **Triage & Version Verification**: Search `wiki/` before compiling.
    - **Strict Version Check**: Verify the exact version/release (e.g., `2026.03`, `v2.1`, `8.1`) in the source document. **If the version cannot be found in the document, you MUST STOP and ask the user what version it is.** Never guess or omit version designations.
    - **Disposition**: Determine whether New, Update, Disputed, or No material.
 3. **Compile (`wiki/`)**: Synthesize dense, structured markdown notes adhering to `wiki/admin/meta/karpathy-template.md` with standard YAML frontmatter (including `version`) and Obsidian `[[wikilinks]]`.
-4. **Log (`wiki/log.md`)**: Append an operation entry recording the ingest action, version, and affected notes:
-   `## [YYYY-MM-DD] ingest | Added <topic>/<note>.md (v<version>) from raw/<topic>/<source>`
+   - **Cross-Reference Update (mandatory):** After authoring the primary note, `grep_search` wiki/ for pages that reference or relate to this topic. Update their content if the new source adds, disputes, or supersedes their claims. Update their `updated:` frontmatter field. A single source may touch 10–15 wiki pages — this is expected.
+4. **Log (`wiki/log.md`)**: Append one canonical entry per operation:
+   `## [YYYY-MM-DD] <action> | <Summary> (v<version>) (notes: [[note-slug]], raw: [[raw/topic/source]])`
 
-### 3. Frontmatter Standard
+### 3. Query Workflow
+When answering questions against the wiki:
+1. Read `wiki/index.md` to locate the relevant domain catalog and candidate notes.
+2. Drill into specific concept pages; synthesize the answer with `[[wikilink]]` citations.
+3. **File Valuable Answers Back**: Evaluate whether the synthesis is worth persisting. If it reveals a new connection, comparison, or analysis not already captured — create a new wiki note for it following the full ingest pipeline (compile → cross-reference → log). Good answers compound the knowledge base just like new sources do.
+4. If the answer is ephemeral (one-off lookup), respond inline only without filing.
+
+### 4. Lint & Maintenance Workflow
+Periodically health-check the wiki:
+1. Run `python3 scripts/check_evidence.py .` — verify grounding fidelity.
+2. Run `python3 scripts/check_frontmatter.py .` — verify all 7 mandatory frontmatter fields.
+3. Run `python3 scripts/lint_wiki.py .` — detect broken `[[wikilinks]]`, orphan notes, and red links.
+4. Ask the LLM to review: contradictions between pages, stale claims superseded by newer sources, concepts mentioned across multiple pages but lacking their own dedicated note.
+5. Suggest new sources to fill data gaps identified during the review.
+
+### 5. Frontmatter Standard
 Every wiki note must include valid YAML frontmatter with all 7 mandatory fields:
 ```yaml
 ---
@@ -89,7 +106,9 @@ When knowledge is superseded by a newer source:
   1. The action type (`ingest`, `update`, `refactor`, `archive`, `lint`).
   2. Exactly what knowledge was added, modified, or superseded.
   3. The specific affected files (`wiki/...` and `raw/...`).
-  - Format: `## [YYYY-MM-DD] <action> | <Summary of knowledge added or changes made> (notes: [[note-slug]])`
+  - **Canonical format** (matches stage 4 of ingest pipeline):
+    `## [YYYY-MM-DD] <action> | <Summary> (v<version>) (notes: [[note-slug]], raw: [[raw/topic/source]])`
+  - For infrastructure/admin changes with no version, omit the `(v<version>)` token.
   - Atomic Rule: Never complete a knowledge operation without updating `wiki/log.md` in the same turn.
 - **Strict Versioning Invariant:** Every piece of knowledge, technical specification, or software documentation compiled into the wiki MUST have explicit versioning (e.g. `2026.03`, `v2.1`, `8.1`). If the version is not explicitly stated in the source document, you MUST STOP and directly ask the user what version it is before compiling. Never assume, invent, or omit version designations.
 
