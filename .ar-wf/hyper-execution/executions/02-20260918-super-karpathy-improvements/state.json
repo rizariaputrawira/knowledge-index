@@ -1,0 +1,48 @@
+{
+  "plan_id": "02-20260918-super-karpathy-improvements",
+  "plan_file": ".ar-wf/planning/02-20260918-super-karpathy-improvements.md",
+  "started_at": "2026-09-18T17:45:00+07:00",
+  "tasks": {
+    "1": {
+      "title": "New scripts \u2014 check_frontmatter.py + lint_wiki.py",
+      "status": "completed",
+      "retry_count": 0
+    },
+    "2": {
+      "title": "AGENTS.md \u2014 Query + Lint workflows + cross-ref rule + unified log format",
+      "status": "completed",
+      "retry_count": 0
+    },
+    "3": {
+      "title": "Template consistency fixes",
+      "status": "completed",
+      "retry_count": 0
+    },
+    "4": {
+      "title": "best-practices.md \u2014 ingest modes + image handling + web clipper",
+      "status": "completed",
+      "retry_count": 0
+    },
+    "5": {
+      "title": "index.md domain expansion + log.md grep tip",
+      "status": "completed",
+      "retry_count": 0
+    },
+    "6": {
+      "title": "Obsidian \u2014 Dataview + Marp + image attachment path",
+      "status": "completed",
+      "retry_count": 0
+    },
+    "7": {
+      "title": "raw/ infrastructure + .gitignore",
+      "status": "completed",
+      "retry_count": 0
+    },
+    "8": {
+      "title": "Final verification gate",
+      "status": "completed",
+      "retry_count": 0
+    }
+  },
+  "completed_at": "2026-09-18T17:53:00+07:00"
+}
