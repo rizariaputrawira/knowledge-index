@@ -14,5 +14,6 @@
     "history/",
     "temp/"
   ],
-  "useMarkdownLinks": false
+  "useMarkdownLinks": false,
+  "attachmentFolderPath": "raw/assets"
 }

@@ -3,5 +3,7 @@
   "obsidian-git",
   "omnisearch",
   "obsidian-kanban",
-  "table-editor-obsidian"
+  "table-editor-obsidian",
+  "dataview",
+  "marp-slides"
 ]
