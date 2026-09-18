@@ -37,7 +37,7 @@ from __future__ import annotations
 
 import re
 import sys
-from dataclasses import dataclass
+from typing import NamedTuple
 from pathlib import Path
 
 NUMBER_TOKEN_RE = re.compile(
@@ -62,18 +62,16 @@ FENCE_CLOSE_RE = re.compile(r"^ {0,3}(`{3,}|~{3,})[ \t]*$")
 WS_RE = re.compile(r"\s+")
 
 SKIP_FILES = {"index.md", "log.md"}
-SKIP_SUBSTRINGS = {"references/", "/references/", "admin/", "/admin/", "meta/", "/meta/", "core-system-rules/", "/core-system-rules/"}
+SKIP_SUBSTRINGS = {"admin/", "references/", "meta/", "core-system-rules/"}
 
 
-@dataclass(frozen=True)
-class Document:
+class Document(NamedTuple):
     title: str | None
     header: tuple[str, ...]
     body: tuple[str, ...]
 
 
-@dataclass(frozen=True)
-class Candidate:
+class Candidate(NamedTuple):
     kind: str
     value: str
 
@@ -147,24 +145,6 @@ def parse_document(text: str) -> Document:
             body.append(line)
 
     return Document(title, tuple(header), tuple(preamble + body))
-
-
-def strip_fences(text: str) -> str:
-    """Remove standard Markdown fenced code blocks."""
-    out = []
-    fence_char = None
-    fence_len = 0
-    for line in text.splitlines():
-        if fence_char:
-            if is_fence_closer(line, fence_char, fence_len):
-                fence_char = None
-            continue
-        opener = fence_opener(line)
-        if opener:
-            fence_char, fence_len = opener
-            continue
-        out.append(line)
-    return "\n".join(out)
 
 
 def strip_noise(text: str) -> str:
@@ -251,15 +231,11 @@ def extract_candidates(text: str) -> list[Candidate]:
         paragraph.append(line)
     flush_blockquote()
     flush_paragraph()
-    seen = set()
-    unique = []
-    for candidate in candidates:
-        value = candidate.value.strip().strip(".,;:()[]")
-        candidate = Candidate(candidate.kind, value)
-        if value and candidate not in seen:
-            seen.add(candidate)
-            unique.append(candidate)
-    return unique
+    cleaned = (
+        Candidate(c.kind, c.value.strip().strip(".,;:()[]"))
+        for c in candidates
+    )
+    return list(dict.fromkeys(c for c in cleaned if c.value))
 
 
 def raw_links_of(article_text: str) -> list[str]:
@@ -299,14 +275,7 @@ def raw_links_of(article_text: str) -> list[str]:
             links.extend(RAW_LINK_RE.findall(line))
             links.extend(WIKILINK_RE.findall(line))
 
-    # De-duplicate while preserving order
-    deduped = []
-    seen = set()
-    for l in links:
-        if l not in seen:
-            seen.add(l)
-            deduped.append(l)
-    return deduped
+    return list(dict.fromkeys(links))
 
 
 def contains(haystack: str, candidate: Candidate) -> bool:
@@ -379,8 +348,7 @@ def no_material_paths(log_file: Path) -> set[str]:
     if not log_file.is_file():
         return set()
     paths = set()
-    text = strip_fences(log_file.read_text(encoding="utf-8"))
-    for line in text.splitlines():
+    for line in parse_document(log_file.read_text(encoding="utf-8")).body:
         m = NO_MATERIAL_HEADING_RE.match(line)
         if m:
             paths.add(m.group(1).strip("`,;."))
@@ -445,18 +413,13 @@ def main(argv: list[str]) -> int:
     for article in articles:
         results[article] = check_article(article, root)
 
-    def label(article: Path) -> Path:
-        try:
-            return article.resolve().relative_to(root)
-        except ValueError:
-            return article
-
     print("# Evidence check\n")
     print("## Fidelity suspects")
     suspect_count = 0
     for article, (misses, _) in results.items():
         if misses:
-            print(f"\n{label(article)}")
+            lbl = article.resolve().relative_to(root) if article.resolve().is_relative_to(root) else article
+            print(f"\n{lbl}")
             for miss in misses:
                 print(f"- {miss}")
                 suspect_count += 1
@@ -467,7 +430,8 @@ def main(argv: list[str]) -> int:
     error_count = 0
     for article, (_, errors) in results.items():
         if errors:
-            print(f"\n{label(article)}")
+            lbl = article.resolve().relative_to(root) if article.resolve().is_relative_to(root) else article
+            print(f"\n{lbl}")
             for error in errors:
                 print(f"- {error}")
                 error_count += 1
