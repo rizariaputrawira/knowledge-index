@@ -37,6 +37,34 @@ _Deep learning, LLM architectures, agentic systems, and inference engineering._
 |---|---|---|
 | _(Awaiting ingest)_ | _Drop primary sources into `raw/` to compile notes._ | — |
 
+### Mathematics & Statistics
+_Probability, linear algebra, information theory, optimization, and numerical methods._
+
+| Topic / Note | Summary | Updated |
+|---|---|---|
+| _(Awaiting ingest)_ | _Drop primary sources into `raw/` to compile notes._ | — |
+
+### Security & Cryptography
+_Threat modeling, cryptographic protocols, CVE analysis, and defensive engineering._
+
+| Topic / Note | Summary | Updated |
+|---|---|---|
+| _(Awaiting ingest)_ | _Drop primary sources into `raw/` to compile notes._ | — |
+
+### DevOps & Infrastructure
+_Containers, CI/CD, observability, networking, cloud primitives, and platform engineering._
+
+| Topic / Note | Summary | Updated |
+|---|---|---|
+| _(Awaiting ingest)_ | _Drop primary sources into `raw/` to compile notes._ | — |
+
+### Reading Notes
+_Books, long-form papers, and articles filed by work — characters, themes, arguments, and key passages._
+
+| Topic / Note | Summary | Updated |
+|---|---|---|
+| _(Awaiting ingest)_ | _Drop primary sources into `raw/` to compile notes._ | — |
+
 ---
 
 ## ⚙️ Administration & Governance
