@@ -25,14 +25,13 @@ MANDATORY_FIELDS = ["title", "tags", "version", "updated", "sources", "summary",
 
 # Same skip logic as check_evidence.py
 SKIP_FILES = {"index.md", "log.md"}
-SKIP_SUBSTRINGS = {"admin/", "/admin/", "references/", "/references/", "meta/", "/meta/", "core-system-rules/", "/core-system-rules/"}
+SKIP_SUBSTRINGS = {"admin/", "references/", "meta/", "core-system-rules/"}
 
 
 def is_empty_value(raw: str) -> bool:
     """Return True if a YAML value is effectively empty."""
     val = raw.strip()
-    # Empty string, empty list, or empty quoted string
-    return val in ("", '""', "''", "[]", '""', "''")
+    return val in ("", '""', "''", "[]")
 
 
 def parse_frontmatter(text: str) -> dict[str, str] | None:
@@ -114,10 +113,7 @@ def main(argv: list[str]) -> int:
         checked += 1
         errors = check_note(note)
         if errors:
-            try:
-                label = note.resolve().relative_to(root)
-            except ValueError:
-                label = note
+            label = note.resolve().relative_to(root) if note.resolve().is_relative_to(root) else note
             print(f"\n{label}")
             for err in errors:
                 print(f"  - {err}")
