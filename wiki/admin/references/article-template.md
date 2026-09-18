@@ -1,6 +1,7 @@
 ---
 title: "{Article Title}"
 tags: [domain, topic, subtopic]
+version: "{Version e.g. 2026.03}"
 updated: {YYYY-MM-DD}
 sources: ["raw/{domain}/{source-file}.md"]
 summary: "{One-sentence description of the core knowledge synthesized in this article.}"
@@ -9,6 +10,7 @@ aliases: ["{alias-1}", "{alias-2}"]
 
 # {Article Title}
 
+> Version: {Version e.g. 2026.03}
 > Sources: {Author/Institution, YYYY-MM-DD}
 > Raw: [[../../raw/{domain}/{source-file}.md]]
 > Updated: {YYYY-MM-DD}

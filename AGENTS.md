@@ -24,21 +24,20 @@ Whenever processing new source materials (papers, articles, transcripts, books, 
    > Collected: {YYYY-MM-DD}
    > Published: {YYYY-MM-DD or Unknown}
    ```
-2. **Triage**: Search `wiki/` before compiling. Determine disposition:
-   - **New**: Creates new concept or entity note(s).
-   - **Update**: Merges into existing note(s).
-   - **Disputed**: Identifies conflicting claims across sources (see below).
-   - **No material**: Source adds nothing new; keep in `raw/`, log, and stop.
-3. **Compile (`wiki/`)**: Synthesize dense, structured markdown notes adhering to `wiki/admin/meta/karpathy-template.md` with standard YAML frontmatter and Obsidian `[[wikilinks]]`.
-4. **Log (`wiki/log.md`)**: Append an operation entry recording the ingest action and affected notes:
-   `## [YYYY-MM-DD] ingest | Added <topic>/<note>.md from raw/<topic>/<source>`
+2. **Triage & Version Verification**: Search `wiki/` before compiling.
+   - **Strict Version Check**: Verify the exact version/release (e.g., `2026.03`, `v2.1`, `8.1`) in the source document. **If the version cannot be found in the document, you MUST STOP and ask the user what version it is.** Never guess or omit version designations.
+   - **Disposition**: Determine whether New, Update, Disputed, or No material.
+3. **Compile (`wiki/`)**: Synthesize dense, structured markdown notes adhering to `wiki/admin/meta/karpathy-template.md` with standard YAML frontmatter (including `version`) and Obsidian `[[wikilinks]]`.
+4. **Log (`wiki/log.md`)**: Append an operation entry recording the ingest action, version, and affected notes:
+   `## [YYYY-MM-DD] ingest | Added <topic>/<note>.md (v<version>) from raw/<topic>/<source>`
 
 ### 3. Frontmatter Standard
-Every wiki note must include valid YAML frontmatter with all 6 mandatory fields:
+Every wiki note must include valid YAML frontmatter with all 7 mandatory fields:
 ```yaml
 ---
 title: "Note Title"
 tags: [domain, concept, topic]
+version: "2026.03"
 updated: YYYY-MM-DD
 sources: ["raw/topic/source-file.md"]
 summary: "One-sentence description of the note's core premise"
@@ -48,6 +47,7 @@ aliases: ["alternative-name"]
 
 Followed immediately by the provenance blockquote:
 ```markdown
+> Version: 2026.03
 > Raw: [[../../raw/topic/source-file.md]]
 > Updated: YYYY-MM-DD
 ```
@@ -91,4 +91,6 @@ When knowledge is superseded by a newer source:
   3. The specific affected files (`wiki/...` and `raw/...`).
   - Format: `## [YYYY-MM-DD] <action> | <Summary of knowledge added or changes made> (notes: [[note-slug]])`
   - Atomic Rule: Never complete a knowledge operation without updating `wiki/log.md` in the same turn.
+- **Strict Versioning Invariant:** Every piece of knowledge, technical specification, or software documentation compiled into the wiki MUST have explicit versioning (e.g. `2026.03`, `v2.1`, `8.1`). If the version is not explicitly stated in the source document, you MUST STOP and directly ask the user what version it is before compiling. Never assume, invent, or omit version designations.
+
 

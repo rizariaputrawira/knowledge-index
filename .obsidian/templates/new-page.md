@@ -1,6 +1,7 @@
 ---
 title: "{{title}}"
 tags: []
+version: ""
 updated: "{{date}}"
 sources: []
 summary: ""
@@ -9,6 +10,7 @@ aliases: []
 
 # {{title}}
 
+> Version: 
 > Raw: [[../../raw/...]]
 > Updated: {{date}}
 
