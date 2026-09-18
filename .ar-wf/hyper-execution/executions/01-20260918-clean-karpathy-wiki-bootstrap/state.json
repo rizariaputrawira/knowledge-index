@@ -7,72 +7,72 @@
   "tasks": {
     "1": {
       "title": "Workspace Initialization & Core Directory Scaffolding",
-      "status": "in_progress",
+      "status": "completed",
       "retry_count": 0,
       "started_at": "2026-09-18T15:18:25+07:00",
-      "ended_at": null,
-      "elapsed_ms": null,
-      "evidence_path": null,
-      "commit": null
+      "ended_at": "2026-09-18T15:22:50+07:00",
+      "elapsed_ms": 265000,
+      "evidence_path": ".ar-wf/hyper-execution/evidence/01-20260918-clean-karpathy-wiki-bootstrap/task-1/report.txt",
+      "commit": "0f0201ad009a622e84107a4751efc97213b19e66"
     },
     "2": {
       "title": "Authoring the Root General Karpathy AGENTS.md",
-      "status": "pending",
+      "status": "completed",
       "retry_count": 0,
-      "started_at": null,
-      "ended_at": null,
-      "elapsed_ms": null,
-      "evidence_path": null,
-      "commit": null
+      "started_at": "2026-09-18T15:24:30+07:00",
+      "ended_at": "2026-09-18T15:26:44+07:00",
+      "elapsed_ms": 134000,
+      "evidence_path": ".ar-wf/hyper-execution/evidence/01-20260918-clean-karpathy-wiki-bootstrap/task-2/report.txt",
+      "commit": "071a0a85f37c94248ced32212bad99c21d622198"
     },
     "3": {
       "title": "Scaffolding Clean Root Indices & Master Logs",
-      "status": "pending",
+      "status": "completed",
       "retry_count": 0,
-      "started_at": null,
-      "ended_at": null,
-      "elapsed_ms": null,
-      "evidence_path": null,
-      "commit": null
+      "started_at": "2026-09-18T15:28:30+07:00",
+      "ended_at": "2026-09-18T15:31:01+07:00",
+      "elapsed_ms": 151000,
+      "evidence_path": ".ar-wf/hyper-execution/evidence/01-20260918-clean-karpathy-wiki-bootstrap/task-3/report.txt",
+      "commit": "91865f2091ffea630966dee754f8edecdbf2ad15"
     },
     "4": {
       "title": "Transplanting & Sanitizing Admin Templates and Meta Specifications",
-      "status": "pending",
+      "status": "completed",
       "retry_count": 0,
-      "started_at": null,
-      "ended_at": null,
-      "elapsed_ms": null,
-      "evidence_path": null,
-      "commit": null
+      "started_at": "2026-09-18T15:32:25+07:00",
+      "ended_at": "2026-09-18T15:37:34+07:00",
+      "elapsed_ms": 309000,
+      "evidence_path": ".ar-wf/hyper-execution/evidence/01-20260918-clean-karpathy-wiki-bootstrap/task-4/report.txt",
+      "commit": "829655532ab97479f0c63805bb4065baeabf15cb"
     },
     "5": {
       "title": "Hardening and Porting scripts/check_evidence.py",
-      "status": "pending",
+      "status": "completed",
       "retry_count": 0,
-      "started_at": null,
-      "ended_at": null,
-      "elapsed_ms": null,
-      "evidence_path": null,
-      "commit": null
+      "started_at": "2026-09-18T15:38:45+07:00",
+      "ended_at": "2026-09-18T15:41:37+07:00",
+      "elapsed_ms": 172000,
+      "evidence_path": ".ar-wf/hyper-execution/evidence/01-20260918-clean-karpathy-wiki-bootstrap/task-5/report.txt",
+      "commit": "6bae61c9da3b76661c7dbb51921071e1c7bd4677"
     },
     "6": {
       "title": "Obsidian Vault Configuration & Plugin Sanitization",
-      "status": "pending",
+      "status": "completed",
       "retry_count": 0,
-      "started_at": null,
-      "ended_at": null,
-      "elapsed_ms": null,
-      "evidence_path": null,
-      "commit": null
+      "started_at": "2026-09-18T15:42:50+07:00",
+      "ended_at": "2026-09-18T15:47:27+07:00",
+      "elapsed_ms": 277000,
+      "evidence_path": ".ar-wf/hyper-execution/evidence/01-20260918-clean-karpathy-wiki-bootstrap/task-6/report.txt",
+      "commit": "1153993a035620d3804b2e87b43eafbfacb7843c"
     },
     "7": {
       "title": "Final Comprehensive Verification & Integrity Gate",
-      "status": "pending",
+      "status": "completed",
       "retry_count": 0,
-      "started_at": null,
-      "ended_at": null,
-      "elapsed_ms": null,
-      "evidence_path": null,
+      "started_at": "2026-09-18T15:49:40+07:00",
+      "ended_at": "2026-09-18T15:50:40+07:00",
+      "elapsed_ms": 60000,
+      "evidence_path": ".ar-wf/hyper-execution/evidence/01-20260918-clean-karpathy-wiki-bootstrap/task-7/report.txt",
       "commit": null
     }
   }

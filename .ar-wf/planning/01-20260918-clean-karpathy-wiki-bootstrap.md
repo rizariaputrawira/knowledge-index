@@ -34,7 +34,7 @@ The following artifacts from the source repository must be **completely excluded
 
 ## 📋 Task Checklist
 
-- [-] **Task 1: Workspace Initialization & Core Directory Scaffolding**
+- [x] **Task 1: Workspace Initialization & Core Directory Scaffolding**
   - Initialize git repository in `/mnt/d/Users/aria/workspaces/personal/knowledge-index` (`git init`).
   - Create directory skeleton:
     - `raw/` (with `.gitkeep`)
@@ -49,7 +49,7 @@ The following artifacts from the source repository must be **completely excluded
   - Create root `README.md` introducing the personal Karpathy Knowledge Index, repository layout, and usage workflow.
   - **Verification:** Run `git status` and `find . -maxdepth 3` to verify clean directory layout.
 
-- [ ] **Task 2: Authoring the Root General Karpathy `AGENTS.md`**
+- [x] **Task 2: Authoring the Root General Karpathy `AGENTS.md`**
   - Create a single source of truth `AGENTS.md` in the workspace root, eliminating the split-brain `.agents/AGENTS.md` antipattern.
   - Formulate core directives:
     1. **Identity & Role**: General Knowledge Assistant for curating, synthesizing, and compounding personal knowledge.
@@ -61,7 +61,7 @@ The following artifacts from the source repository must be **completely excluded
     7. **Single Log Invariant**: Chronological operations logged strictly to `wiki/log.md` using format `## [YYYY-MM-DD] action | Description`.
   - **Verification:** Check `AGENTS.md` contains 0 mentions of `sfd`, `sfm`, `bri`, `sas`, `boss`, `viya`, `postman`, `excel`, or hardcoded foreign workspace paths.
 
-- [ ] **Task 3: Scaffolding Clean Root Indices & Master Logs**
+- [x] **Task 3: Scaffolding Clean Root Indices & Master Logs**
   - Author `wiki/index.md`:
     - Clean top-level navigation hub with starter index sections (e.g. `Computer Science & Systems`, `Engineering & Architecture`, `AI & Machine Learning`, `Reference & Governance`).
     - Link to [[admin-index]] for administration, templates, and patterns.
@@ -80,7 +80,7 @@ The following artifacts from the source repository must be **completely excluded
       - [[references/archive-template]]
   - **Verification:** Verify reciprocal wikilinks between `wiki/index.md` and `wiki/admin/admin-index.md`.
 
-- [ ] **Task 4: Transplanting & Sanitizing Admin Templates and Meta Specifications**
+- [x] **Task 4: Transplanting & Sanitizing Admin Templates and Meta Specifications**
   - Transplant and sanitize templates from source:
     - `wiki/admin/references/article-template.md`: Update to reconcile frontmatter schema with blockquote provenance (`> Raw:`, `> Sources:`, `> Updated:`).
     - `wiki/admin/references/raw-template.md`: Clean provenance headers (`> Source:`, `> Collected:`, `> Published:`).
@@ -93,7 +93,7 @@ The following artifacts from the source repository must be **completely excluded
     - `wiki/admin/core-system-rules/core-ai-rules.md`: General knowledge preservation, data lifecycle, and redaction rules (purged of CSV/SFM naming rules).
   - **Verification:** Run `grep -rnIE "sfd|sfm|bri|sas|boss|viya|v2026|TechData" wiki/admin/` to confirm zero residual terms.
 
-- [ ] **Task 5: Hardening and Porting `scripts/check_evidence.py`**
+- [x] **Task 5: Hardening and Porting `scripts/check_evidence.py`**
   - Copy `scripts/check_evidence.py` from `/mnt/d/Users/aria/workspaces/bri/sfd-implementation-project/scripts/check_evidence.py`.
   - Apply 4 critical architectural fixes identified in the adversarial audit:
     1. **Exit Code Semantics**: Update script exit logic so `sys.exit(0)` is returned on zero errors, and `sys.exit(1)` is returned if evidence errors or unreferenced raw files are found (enabling automated CI/CD verification).
@@ -103,7 +103,7 @@ The following artifacts from the source repository must be **completely excluded
   - Make script executable (`chmod +x scripts/check_evidence.py`).
   - **Verification:** Execute `python3 scripts/check_evidence.py .` and verify 0 fidelity suspects, 0 evidence errors, 0 unreferenced raw files, and exit status code 0.
 
-- [ ] **Task 6: Obsidian Vault Configuration & Plugin Sanitization**
+- [x] **Task 6: Obsidian Vault Configuration & Plugin Sanitization**
   - Copy `.obsidian` configurations selectively:
     - Copy `app.json`, `appearance.json`, `graph.json`, `core-plugins.json`.
     - Clean `app.json`: remove hardcoded banking file exclusions (`CLAUDE.md`, `SFD_*.xlsx`, `.planning/`, etc.), keep generic system ignores.
@@ -121,7 +121,7 @@ The following artifacts from the source repository must be **completely excluded
     - `.obsidian/plugins/termy/` (prevents importing 40MB Windows binary `termy-server-win32-x64.exe` and hardcoded `D:/Users/aria/workspaces/bri/...` paths).
   - **Verification:** Inspect `.obsidian/` to ensure no `workspace.json` exists, no `termy` directory exists, and `community-plugins.json` is valid JSON.
 
-- [ ] **Task 7: Final Comprehensive Verification & Integrity Gate**
+- [x] **Task 7: Final Comprehensive Verification & Integrity Gate**
   - Run **Residual String Scan**:
     ```bash
     grep -rnIE "sfd|sfm|bri|sas|boss|viya" .
