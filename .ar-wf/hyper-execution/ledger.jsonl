@@ -1,0 +1,2 @@
+{"event":"plan-started","plan_id":"01-20260918-clean-karpathy-wiki-bootstrap","ts":"2026-09-18T15:18:00+07:00"}
+{"event":"task-started","plan_id":"01-20260918-clean-karpathy-wiki-bootstrap","task":"1","title":"Workspace Initialization & Core Directory Scaffolding","ts":"2026-09-18T15:18:25+07:00"}

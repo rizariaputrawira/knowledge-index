@@ -1,0 +1,28 @@
+# OS Metadata
+.DS_Store
+Thumbs.db
+
+# Environment & Secrets
+.env
+.env.*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+
+# Obsidian Ephemeral State & Caches
+.obsidian/workspace.json
+.obsidian/plugins/omnisearch/cache/
+.obsidian/plugins/omnisearch/*.cache
+
+# Temporary & Lock files
+~$*.xlsx
+~$*.docx
+*.tmp
+*.temp
+
+# Hyper-Execution Volatile Evidence
+.ar-wf/hyper-execution/evidence/

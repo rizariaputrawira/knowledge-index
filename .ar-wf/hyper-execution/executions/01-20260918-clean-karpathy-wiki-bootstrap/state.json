@@ -1,0 +1,79 @@
+{
+  "schema_version": 3,
+  "plan_id": "01-20260918-clean-karpathy-wiki-bootstrap",
+  "plan_file": ".ar-wf/planning/01-20260918-clean-karpathy-wiki-bootstrap.md",
+  "created_at": "2026-09-18T15:17:35+07:00",
+  "updated_at": "2026-09-18T15:17:35+07:00",
+  "tasks": {
+    "1": {
+      "title": "Workspace Initialization & Core Directory Scaffolding",
+      "status": "in_progress",
+      "retry_count": 0,
+      "started_at": "2026-09-18T15:18:25+07:00",
+      "ended_at": null,
+      "elapsed_ms": null,
+      "evidence_path": null,
+      "commit": null
+    },
+    "2": {
+      "title": "Authoring the Root General Karpathy AGENTS.md",
+      "status": "pending",
+      "retry_count": 0,
+      "started_at": null,
+      "ended_at": null,
+      "elapsed_ms": null,
+      "evidence_path": null,
+      "commit": null
+    },
+    "3": {
+      "title": "Scaffolding Clean Root Indices & Master Logs",
+      "status": "pending",
+      "retry_count": 0,
+      "started_at": null,
+      "ended_at": null,
+      "elapsed_ms": null,
+      "evidence_path": null,
+      "commit": null
+    },
+    "4": {
+      "title": "Transplanting & Sanitizing Admin Templates and Meta Specifications",
+      "status": "pending",
+      "retry_count": 0,
+      "started_at": null,
+      "ended_at": null,
+      "elapsed_ms": null,
+      "evidence_path": null,
+      "commit": null
+    },
+    "5": {
+      "title": "Hardening and Porting scripts/check_evidence.py",
+      "status": "pending",
+      "retry_count": 0,
+      "started_at": null,
+      "ended_at": null,
+      "elapsed_ms": null,
+      "evidence_path": null,
+      "commit": null
+    },
+    "6": {
+      "title": "Obsidian Vault Configuration & Plugin Sanitization",
+      "status": "pending",
+      "retry_count": 0,
+      "started_at": null,
+      "ended_at": null,
+      "elapsed_ms": null,
+      "evidence_path": null,
+      "commit": null
+    },
+    "7": {
+      "title": "Final Comprehensive Verification & Integrity Gate",
+      "status": "pending",
+      "retry_count": 0,
+      "started_at": null,
+      "ended_at": null,
+      "elapsed_ms": null,
+      "evidence_path": null,
+      "commit": null
+    }
+  }
+}
