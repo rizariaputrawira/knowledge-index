@@ -13,7 +13,7 @@ Up: [[admin-index]]
 
 ---
 
-## Executive Concept
+## Core Concept
 Instead of retrieving unorganized chunks from raw documents at query time (as in standard RAG), an AI assistant incrementally builds and maintains a **persistent, compounding wiki** — a structured, dense, interlinked network of markdown files.
 
 ```mermaid

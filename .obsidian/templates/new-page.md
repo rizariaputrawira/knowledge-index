@@ -18,11 +18,14 @@ Up: [[index]]
 
 ---
 
-## Overview
-*Brief overview of the concept.*
+## Core Concept
+*Dense, factual definition — no narrative filler.*
 
-## Specifications & Core Details
-*In-depth explanation, structured tables, or diagrams.*
+## Specifications & Details
+*Structured tables, parameters, Mermaid diagrams, or code blocks.*
+
+## Key Invariants
+- **Invariant 1**: *Must hold under all conditions.*
 
 ## Related Notes
 - [[index]]

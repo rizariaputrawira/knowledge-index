@@ -1,6 +1,7 @@
 ---
 title: "Karpathy Pattern Template & Standards"
 tags: [meta, template, karpathy, wiki-standards]
+version: "meta"
 updated: 2026-09-18
 sources: []
 summary: "Standard Karpathy Pattern rules, frontmatter protocol, and verification checklist for all wiki note creation."

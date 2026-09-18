@@ -1,6 +1,7 @@
 ---
 title: "Knowledge Index"
 tags: [index, hub]
+version: "meta"
 updated: 2026-09-18
 sources: []
 summary: "Master navigation index for the personal Karpathy Knowledge Wiki."
