@@ -28,30 +28,40 @@ SKIP_FILES = {"index.md", "log.md"}
 SKIP_SUBSTRINGS = {"admin/", "references/", "meta/", "core-system-rules/"}
 
 
+GENERIC_VER_RE = re.compile(r"^(?:v?\d+(?:\.\d+)*(?:[-_][a-zA-Z0-9]+)?|meta)$")
+POISON_VALUES = {"latest", "tbd", "current", "unknown", "none", "unreleased"}
+
+
 def is_empty_value(raw: str) -> bool:
     """Return True if a YAML value is effectively empty."""
     val = raw.strip()
     return val in ("", '""', "''", "[]")
 
 
+def validate_version_syntax(val: str) -> bool:
+    """Check if version string has valid syntax and is not a placeholder."""
+    clean = val.strip().strip("\"'")
+    if not clean or clean.lower() in POISON_VALUES or clean.startswith("{"):
+        return False
+    return GENERIC_VER_RE.match(clean) is not None
+
+
 def parse_frontmatter(text: str) -> dict[str, str] | None:
     """Return a dict of frontmatter fields, or None if no valid frontmatter."""
-    if not text.startswith("---"):
+    m = re.match(r"^\s*---\s*\n(.*?)\n---\s*(\n|$)", text, re.DOTALL)
+    if not m:
         return None
-    parts = text.split("---", 2)
-    if len(parts) < 3:
-        return None
-    fm_text = parts[1]
+    fm_text = m.group(1)
     fields: dict[str, str] = {}
     current_key: str | None = None
     for line in fm_text.splitlines():
         if not line.strip() or line.strip().startswith("#"):
             continue
         # Top-level key: value
-        m = re.match(r"^(\w[\w-]*):\s*(.*)", line)
-        if m:
-            current_key = m.group(1)
-            fields[current_key] = m.group(2).strip()
+        m_line = re.match(r"^(\w[\w-]*):\s*(.*)", line)
+        if m_line:
+            current_key = m_line.group(1)
+            fields[current_key] = m_line.group(2).strip()
         elif current_key and line.startswith(("  ", "\t")):
             # Continuation (multiline / list items) — append to current key
             fields[current_key] = (fields.get(current_key, "") + " " + line.strip()).strip()
@@ -70,6 +80,19 @@ def check_note(path: Path) -> list[str]:
             errors.append(f"missing field: {field}")
         elif is_empty_value(fields[field]):
             errors.append(f"empty field: {field}")
+
+    # Version format validation
+    if "version" in fields and not is_empty_value(fields["version"]):
+        raw_version = fields["version"].strip().strip("\"'")
+        if not validate_version_syntax(raw_version):
+            errors.append(f"invalid version format: '{raw_version}'")
+
+    # Optional bundle_version validation
+    if "bundle_version" in fields and not is_empty_value(fields["bundle_version"]):
+        b_ver = fields["bundle_version"].strip().strip("\"'")
+        if not validate_version_syntax(b_ver) or b_ver == "meta":
+            errors.append(f"invalid bundle_version format: '{b_ver}'")
+
     return errors
 
 

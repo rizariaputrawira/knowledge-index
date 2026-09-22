@@ -29,6 +29,7 @@ from collections import defaultdict
 from pathlib import Path
 
 WIKILINK_RE = re.compile(r"\[\[([^\]|#]+?)(?:[|#][^\]]*)?\]\]")
+VERSIONED_STEM_RE = re.compile(r"^(?P<stem>.+?)-v(?P<ver>\d+(?:[-_.]\d+)*)$")
 SKIP_ORPHAN_STEMS = {"index", "log", "admin-index"}
 SKIP_ADMIN = {"admin/"}
 
@@ -136,7 +137,28 @@ def main(argv: list[str]) -> int:
     else:
         print(f"\n⚠ {red_count} red link(s) — consider creating stub pages")
 
-    print(f"\n## Summary\n{broken_count} broken wikilink(s), {orphan_count} orphan(s), {red_count} red link(s)")
+    # --- Sweep 4: Missing concept hubs (2+ versioned notes sharing a stem) ---
+    print("\n## Missing concept hubs")
+    stem_groups: dict[str, list[str]] = defaultdict(list)
+    for note in iter_wiki_notes(wiki_dir):
+        m = VERSIONED_STEM_RE.match(note.stem)
+        if m:
+            stem_groups[m.group("stem")].append(note.stem)
+
+    missing_hub_count = 0
+    for stem, variants in sorted(stem_groups.items()):
+        if len(variants) >= 2:
+            target = resolve_slug(stem, all_notes)
+            if target is None:
+                links = ", ".join(f"[[{v}]]" for v in sorted(variants))
+                print(f"  - Concept '{stem}' has {len(variants)} versions ({links}) but lacks unversioned concept hub [[{stem}]]")
+                missing_hub_count += 1
+    if missing_hub_count == 0:
+        print("(none)")
+    else:
+        print(f"\n⚠ {missing_hub_count} concept hub(s) missing — consider establishing unversioned concept hubs")
+
+    print(f"\n## Summary\n{broken_count} broken wikilink(s), {orphan_count} orphan(s), {red_count} red link(s), {missing_hub_count} missing concept hub(s)")
 
     # Only broken wikilinks are hard errors (they break Obsidian navigation)
     return 1 if broken_count > 0 else 0
