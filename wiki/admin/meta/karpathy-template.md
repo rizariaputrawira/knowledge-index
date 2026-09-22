@@ -26,13 +26,14 @@ Reference this page in agent instructions as `Follow [[karpathy-template]]`.
 ---
 
 ## Frontmatter Protocol
-Every compiled wiki note must begin with valid YAML frontmatter containing all 7 mandatory fields:
+Every compiled wiki note must begin with valid YAML frontmatter containing the 7 mandatory fields, with optional bundle descriptor when source bundle differs from topic release:
 
 ```yaml
 ---
 title: "Page Title"
 tags: [domain, topic, subtopic]
-version: "2026.03"
+version: "1.2.0"
+bundle_version: "2026.03"    # Optional: documentation bundle release if different from version
 updated: YYYY-MM-DD
 sources: ["raw/topic/source-document.md"]
 summary: "One-sentence description of the note's core premise"
@@ -42,7 +43,8 @@ aliases: ["alternative-name-1", "alternative-name-2"]
 
 Followed immediately by the provenance header:
 ```markdown
-> Version: 2026.03
+> Version: 1.2.0
+> Bundle: 2026.03 (optional)
 > Raw: [[../../raw/topic/source-document.md]]
 > Updated: YYYY-MM-DD
 ```
@@ -50,7 +52,8 @@ Followed immediately by the provenance header:
 ### Frontmatter Field Requirements
 - `title`: Clean, human-readable title.
 - `tags`: Substantive, domain-specific tags.
-- `version`: Strict release/version identifier (e.g. `2026.03`, `v2.1`). If not in the source, ask the user.
+- `version`: Strict release/version identifier of the subject component (e.g. `1.2.0`, `2026.03`, `meta`). If not confirmed in source, ask the user.
+- `bundle_version`: Optional source documentation bundle release when extracted from a newer/differing bundle (e.g. `2026.03`).
 - `updated`: Current ISO date (`YYYY-MM-DD`).
 - `sources`: Array of relative paths pointing to backing documents under `raw/`.
 - `summary`: Crisp, single-sentence summary.

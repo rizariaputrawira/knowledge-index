@@ -26,7 +26,16 @@ Whenever processing new source materials (papers, articles, transcripts, books, 
    > Version: {version string — verify in source or ask user}
    ```
 2. **Triage & Version Verification**: Search `wiki/` before compiling.
-   - **Strict Version Check**: Verify the exact version/release (e.g., `2026.03`, `v2.1`, `8.1`) in the source document. **If the version cannot be found in the document, you MUST STOP and ask the user what version it is.** Never guess or omit version designations.
+   - **Two-Field Version Model**:
+     - `version` (mandatory): Exact semantic version of the specific tool, library, spec, or topic described in the note (e.g. `1.2.0`, `2026.03`, `meta`).
+     - `bundle_version` (optional): Source documentation bundle release if extracted from a bundle whose version differs from the subject's actual version. Omit when identical.
+   - **Hard STOP-and-Ask Ingestion Gate**:
+     - Inspect document title, headers, footers, section markers, and changelogs for version signals.
+     - If `version` or `bundle_version` is unconfirmed, ambiguous, missing, or contradictory within the source: **YOU MUST STOP AND ASK THE USER FOR A DECISION BEFORE COMPILING.** Never guess, invent, or default to "latest".
+   - **Separate Notes Per Version & Concept Hubs**:
+     - Never overwrite or merge distinct versions into a single note when specifications diverge.
+     - Suffix versioned notes: `<slug>-v<ver>.md` (e.g., `api-spec-v2-1.md`).
+     - When $\ge 2$ sibling versions exist for a concept stem, establish/maintain an unversioned concept hub note `[[<concept-slug>]]` with `version: "meta"` linking to all version variants and detailing migration/behavioral deltas.
    - **Disposition**: Determine whether New, Update, Disputed, or No material.
 3. **Compile (`wiki/`)**: Synthesize dense, structured markdown notes adhering to `wiki/admin/meta/karpathy-template.md` with standard YAML frontmatter (including `version`) and Obsidian `[[wikilinks]]`.
    - **Cross-Reference Update (mandatory):** After authoring the primary note, `grep_search` wiki/ for pages that reference or relate to this topic. Update their content if the new source adds, disputes, or supersedes their claims. Update their `updated:` frontmatter field. A single source may touch 10–15 wiki pages — this is expected.
@@ -43,18 +52,19 @@ When answering questions against the wiki:
 ### 4. Lint & Maintenance Workflow
 Periodically health-check the wiki:
 1. Run `python3 scripts/check_evidence.py .` — verify grounding fidelity.
-2. Run `python3 scripts/check_frontmatter.py .` — verify all 7 mandatory frontmatter fields.
-3. Run `python3 scripts/lint_wiki.py .` — detect broken `[[wikilinks]]`, orphan notes, and red links.
+2. Run `python3 scripts/check_frontmatter.py .` — verify all mandatory and optional frontmatter fields.
+3. Run `python3 scripts/lint_wiki.py .` — detect broken `[[wikilinks]]`, orphan notes, red links, and missing concept hubs.
 4. Ask the LLM to review: contradictions between pages, stale claims superseded by newer sources, concepts mentioned across multiple pages but lacking their own dedicated note.
 5. Suggest new sources to fill data gaps identified during the review.
 
 ### 5. Frontmatter Standard
-Every wiki note must include valid YAML frontmatter with all 7 mandatory fields:
+Every wiki note must include valid YAML frontmatter with the mandatory 7 fields, plus optional bundle descriptor when applicable:
 ```yaml
 ---
 title: "Note Title"
 tags: [domain, concept, topic]
-version: "2026.03"
+version: "1.2.0"
+bundle_version: "2026.03"    # Optional: source bundle release if different from version
 updated: YYYY-MM-DD
 sources: ["raw/topic/source-file.md"]
 summary: "One-sentence description of the note's core premise"
@@ -64,7 +74,8 @@ aliases: ["alternative-name"]
 
 Followed immediately by the provenance blockquote:
 ```markdown
-> Version: 2026.03
+> Version: 1.2.0
+> Bundle: 2026.03 (optional)
 > Raw: [[../../raw/topic/source-file.md]]
 > Updated: YYYY-MM-DD
 ```
@@ -110,6 +121,11 @@ When knowledge is superseded by a newer source:
     `## [YYYY-MM-DD] <action> | <Summary> (v<version>) (notes: [[note-slug]], raw: [[raw/topic/source]])`
   - For infrastructure/admin changes with no version, omit the `(v<version>)` token.
   - Atomic Rule: Never complete a knowledge operation without updating `wiki/log.md` in the same turn.
-- **Strict Versioning Invariant:** Every piece of knowledge, technical specification, or software documentation compiled into the wiki MUST have explicit versioning (e.g. `2026.03`, `v2.1`, `8.1`). If the version is not explicitly stated in the source document, you MUST STOP and directly ask the user what version it is before compiling. Never assume, invent, or omit version designations.
+- **Strict Versioning Invariant:** Every piece of knowledge, technical specification, or software documentation compiled into the wiki MUST have explicit versioning:
+  - Valid formats: SemVer / CalVer (e.g. `1.2.0`, `2026.03`, `v2.1`) or `"meta"` for admin/meta notes.
+  - **Two-Field Architecture**: When component version diverges from bundle:
+    - `version`: Component release truth.
+    - `bundle_version`: Source bundle release (omit if identical to `version`).
+  - **Hard STOP-and-Ask Rule**: If the version (or bundle version when divergent) cannot be determined with complete confidence from the source document, or if version signals conflict: **YOU MUST STOP and directly ask the user before compiling.** Never guess or invent arbitrary version designations.
 
 
