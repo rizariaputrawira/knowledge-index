@@ -24,8 +24,8 @@ venv/
 *.tmp
 *.temp
 
-# Hyper-Execution Volatile Evidence
-.ar-wf/hyper-execution/evidence/
+# Hyper-Execution & Planning Workflow
+.ar-wf/
 
 # Python cache
 scripts/__pycache__/
